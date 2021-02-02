@@ -1,0 +1,8 @@
+ftp地址：赋予爱-other-wisdom
+
+
+覆盖login.vue 页面不能覆盖，其余除了分享配置infodetail show detail 地址不需要传，其余都一样
+ 
+
+上传之前需要改地址
+index.js  color.js  login.vue

@@ -7,6 +7,11 @@ function resolve(dir) {
     return path.join(__dirname, dir)
 }
 module.exports = {
+    transpileDependencies: [
+        "swiper",
+        "dom7",
+        "ssr-window"
+    ],
     outputDir: 'dist',
     publicPath: process.env.NODE_ENV === 'production' ? '/vant-demo/' : '/',
 
@@ -39,7 +44,7 @@ module.exports = {
     },
     devServer: {
         open: true, // 是否自动弹出浏览器页面
-        host: '192.168.8.151',
+        host: '192.168.110.66',
         port: '8080',
         https: false,
         hotOnly: false

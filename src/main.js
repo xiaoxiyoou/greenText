@@ -8,6 +8,7 @@ import 'amfe-flexible'
 import store from './store/index'
 import axios from 'axios'
 import share from 'assets/js/share'
+import color from 'assets/js/color'
 import router from './router'
 import VueCookies from 'vue-cookies'
 Vue.config.productionTip = false
@@ -24,6 +25,7 @@ Vue.use(LyTab)
 
 Vue.prototype.$moment = 'moment'
 router.beforeEach((to, from, next) => {
+  color()
   if (to.meta.title) {
     document.title = to.meta.title
   }
@@ -33,7 +35,6 @@ router.beforeEach((to, from, next) => {
       localStorage.setItem('fromUrl', to.fullPath)
     }
     if (localStorage.getItem('userid') != "undefined" && localStorage.getItem('userid')!=null ) {
-      // if (localStorage.getItem('userid')&& VueCookies.get('userid')  && localStorage.getItem('token')) {
       next();
     } else {
      

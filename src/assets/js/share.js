@@ -5,14 +5,13 @@ import axios from 'axios'
 var wx = require('weixin-js-sdk')
 export default function wxShare({
   desc
-} = {}) { 
-  // let link = 'http://b.fuyulove.com/wisdom/#' +  localStorage.getItem('fromUrl')
-  let link = window.location.href.match(/(\S*)wisdom/)[1]+"wisdom/index.html#" +  localStorage.getItem('fromUrl')
+} = {}) {
+  let link = window.location.href.match(/(\S*)wisdom/)[1] + "wisdom/index.html#" + localStorage.getItem('fromUrl')
   // axios.get('http://b.fuyulove.com/Action/CacheData.aspx?action=jssdk', {
-    axios.get('/connect/jssdk', {
+      axios.get('/connect/jssdk', {
       params: {
-        url:encodeURIComponent(location.href.split('#')[0]),
-        sid:659,
+        url: encodeURIComponent(location.href.split('#')[0]),
+        // sid: 659,
         t: Math.random(),
       }
     })

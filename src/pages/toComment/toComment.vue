@@ -3,7 +3,7 @@
     <div class="title row van-hairline--bottom a-c">
       <div class="text">总体打分</div>
       <div class="startWrapper row  a-c">
-        <van-rate v-model="value" :size="20" color="#5aa967" void-icon="star" void-color="#eee" @change="onChange" />
+        <van-rate v-model="value" :size="20" :color="color" void-icon="star" void-color="#eee" @change="onChange" />
 
       </div>
     </div>
@@ -20,7 +20,7 @@
         <!-- <img class="" src="http://cdn.fuyulove.com/Upload/userimg/2020/4/20/04c78b8d960844848c4bea5505182ae8.jpg" alt=""> -->
       </div>
     </div>
-    <div class="btm row j-c a-c" @click="publish">发表</div>
+    <div class="btm row j-c a-c" @click="publish" :style="{'background-color':color}">发表</div>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -31,6 +31,7 @@ import { Toast } from 'vant'
 export default {
   data() {
     return {
+      color:localStorage.getItem("color"),
       value: 5,
       score: 5,
       intro: '',
@@ -47,6 +48,7 @@ export default {
 
   },
   methods: {
+    
 
     // 解决输入框高度bug不稳定问题
     getHeight() {

@@ -8,7 +8,7 @@
         <div class="name" v-if="item.title">{{item.title}}</div>
         <div class="name" v-else>暂无标题</div>
         <div class="detail row j-b a-c">
-          <div class="sale">{{item.createdate}}</div>
+          <div class="sale">{{item.createdate |moment}}</div>
         </div>
       </div>
     </div>

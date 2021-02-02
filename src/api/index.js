@@ -3,11 +3,15 @@ import ajax from './ajax'
 // 1. 定义基础路径
 
 
-// 纪念堂
-// const BASE_URL = 'http://product.jzb768.com/'
-// const URL = 'http://partner.fuyulove.com/'
-const BASE_URL = '/'
-const URL = '/'
+// const BASE_URL = 'http://001.app.fuyulove.com/'
+// const URL = 'http://001.app.fuyulove.com/'
+
+const BASE_URL = 'http://smlc.app.fuyulove.com/'
+const URL = 'http://smlc.app.fuyulove.com/'
+
+// const BASE_URL = '/'
+// const URL = '/'
+
 const VIDEO_URL = "https://wxappapi.fuyulove.com"
 // 视频
 export const videoList = (params) => ajax(VIDEO_URL + '/DeathbedConcernApi/DeathbedConcernList.ashx', params)
@@ -153,3 +157,7 @@ export const getsearch = (params) => ajax(URL + 'action/memorapi?action=getsearc
 export const delsearch = (params) => ajax(URL + 'action/memorapi?action=delsearch', params, 'POST')
 // 执宾登陆
 export const LoginAdmin = (params) => ajax('http://b.fuyulove.com/Action/LoginAdmin.aspx', params, 'POST')
+// 执宾申请
+export const emceeRegist = (params) => ajax(URL + 'api/emcee/regist',params,'POST')
+// 企业申请
+export const storeRegist = (params) => ajax(URL + 'api/store/regist',params,'POST')

@@ -8,7 +8,6 @@ export default {
   data() {
     return {
       redirect: '',
-      sid: ''
     }
   },
   mounted() {
@@ -17,35 +16,28 @@ export default {
   methods: {
     _getCode() {
       let uid = this.getUrlParam('uid')
-      let fromUrl = localStorage.getItem('fromUrl')
-      if (fromUrl.search("sid") != -1) {
-        this.sid = this.getCaption(fromUrl, 1)
-      } else {
-        this.sid = 659
-      }
-      console.log('uid', uid)
-      console.log('登陆sid', this.sid)
+  
       if (uid === '' || uid === undefined || uid === null) {
-        this.GetCode(this.sid)
+        this.GetCode()
       } else {
-        this.GetOpenId(uid, this.sid)
+        this.GetOpenId(uid)
       }
     },
 
-    GetCode: function (sid) {
+    GetCode: function () {
      
       let redirectUrl = window.location.href
-      // let url = 'http://002.app.fuyulove.com/connect/authorize?sid=' + sid + '&redirect_uri=' + redirectUrl;
-      let url = '/connect/authorize?sid=' + sid + '&redirect_uri=' + redirectUrl;
+      let url = 'http://smlc.app.fuyulove.com/connect/authorize?redirect_uri=' + redirectUrl;
+      // let url = 'http://001.app.fuyulove.com/connect/authorize?redirect_uri=' + redirectUrl;
+      // let url = '/connect/authorize?redirect_uri=' + redirectUrl;
       window.location.href = url
     },
 
-    GetOpenId(uid, sid) {
+    GetOpenId(uid) {
       axios.get('http://passport.fuyulove.com/sns/getoken', {
         method: 'get',
         params: {
           uid: uid,
-          sid: sid
         }
       }).then((res) => {
         console.log('登陆', res);
@@ -57,7 +49,7 @@ export default {
         localStorage.setItem('userid', userid)
         localStorage.setItem('token', token)
         localStorage.setItem('openid', openid)
-        // console.log(localStorage.getItem('fromUrl'))
+        console.log(localStorage.getItem('fromUrl'))
         if (localStorage.getItem('fromUrl')) {
           this.$router.replace({
             path: localStorage.getItem('fromUrl')

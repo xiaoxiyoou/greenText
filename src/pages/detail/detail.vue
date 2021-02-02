@@ -322,7 +322,6 @@ export default {
           window.addEventListener('scroll', this.handleScroll)
           window.addEventListener('scroll', this.handleScroll2)
         })
-        // share(this.goodDetail.title, 'http://wx.app.jzb768.com/#/detail?id=' + this.goodDetail.id, '', this.goodDetail.imgurl)
         share(this.goodDetail.title,  '', this.goodDetail.imgurl)
       })
     },

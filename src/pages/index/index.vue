@@ -1,44 +1,31 @@
 <template>
-  <div class="container col j-b">
+  <div class="container col j-b" v-wechat-title="orginfo.orgname" :style="{'background-color':color}">
     <div class="bannerWrapper">
-      <van-swipe class="banner" :autoplay="3000" indicator-color="#5aa967">
+      <van-swipe class="banner" :autoplay="3000" indicator-color=color>
         <van-swipe-item v-for="(image, index) in banner" :key="index">
           <img :src="image" v-if="image" />
         </van-swipe-item>
       </van-swipe>
-      <!-- <div class="positon-wrapper row a-c" @click="areaShowList">
-        <img class="positon-img" src="./../../assets/img/positon.png" alt="">
-        <div>{{position}}</div>
-      </div> -->
+
       <div class="avertwraper row a-c " @click="personalCenter">
         <img :src="userinfo.headimgurl" alt="">
         <div>{{userinfo.nickname}}</div>
       </div>
       <div class="shadow"></div>
-      <div class="center  row a-c j-c" @click="personalCenter">点击进入个人中心</div>
+      <div class="center  row a-c j-c" @click="personalCenter" :style="{'background-color':color}">点击进入个人中心</div>
     </div>
     <div class="item-wrapper row f-w j-c a-c">
-      <!-- <div class="item col j-c a-c border-right " @click="infoDetail()">
-        <img src="./icon.png" alt="">
-        <div>政策公示</div>
-      </div> -->
+
       <div class="item col j-c a-c " @click="person(index,item.link)" v-for="(item,index) in list" :key="index">
         <img :src="item.icon" alt="">
         <div>{{item.name}}</div>
       </div>
-      <!-- <div class="item col j-c a-c   border-right" @click="mechan()">
-        <img src="./shop.png" alt="">
-        <div>机构公示</div>
-      </div>
-      <div class="item col j-c a-c" @click="comment()">
-        <img src="./comment.png" alt="">
-        <div>评价公示</div>
-      </div> -->
 
     </div>
     <div class="bar"></div>
-    <div class="btm  col j-c a-c">
-      <img src="./btm.png" alt="">
+    <div class="btm  col j-c a-c" :style="{'background-color':bgcolor}">
+      <img :src="orginfo.logo" v-if="orginfo.logo" alt="">
+      <img src="./btm.png" v-else alt="">
     </div>
     <!-- 城市选择 -->
     <van-popup v-model="areaShow" position="bottom">
@@ -55,19 +42,24 @@ export default {
     return {
       areaShow: false,
       areaList: area,
-      position: sessionStorage.getItem('position') ||'辽宁省 沈阳市',
-      info: [],
+      position: sessionStorage.getItem('position') || '辽宁省 沈阳市',
+      info: '',
       list: [],
       banner: [],
       routers: ['/info', '/person', '/mechan', '/comment'],
-      userinfo: ''
+      userinfo: '',
+      orginfo: '',
+      color: localStorage.getItem("color"),
+      bgcolor: localStorage.getItem("bgcolor")
 
 
     }
   },
   mounted() {
+    this.$nextTick(() => {
+      this._indexInfo()
+    });
     document.body.scrollTop = document.documentElement.scrollTop = 0
-    this._indexInfo()
     this._selfDetail()
 
 
@@ -86,7 +78,7 @@ export default {
         return item.name;
       }).join(" ");
       this.position = result
-      sessionStorage.setItem('position',this.position)
+      sessionStorage.setItem('position', this.position)
       this.areaShow = false
     },
     _indexInfo() {
@@ -94,9 +86,8 @@ export default {
         console.log('功能', res)
         this.info = res.data.info
         this.list = res.data.list
+        this.orginfo = res.data.orginfo
         this.banner = this.info.banner
-        console.log('banner', this.banner)
-
       })
     },
     person(index, link) {
@@ -216,7 +207,6 @@ export default {
       color #ffffff
       font-size 30px
   .item-wrapper
-    background-color #52aa5e
     color #ffffff
     font-size 30px
     height 500px

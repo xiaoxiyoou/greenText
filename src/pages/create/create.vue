@@ -1,8 +1,11 @@
 <template>
   <div class="container">
     <div class="con col a-c">
-      <div class="top row">
-        <div class="tabDouble row j-c a-c" :class="idx==index?'hover':''" @click="son(item,idx)" v-for="(item,idx) in menu" :key="idx">{{item}}</div>
+      <div class="top row" :style="{'color':color,'border-color': color}">
+        <div class="tabDouble row j-c a-c" :class="idx==index?'hover':''" @click="son(item,idx)" v-for="(item,idx) in menu" :key="idx" :style="{'background-color':color}"> {{item}}</div>
+      </div>
+      <div class="topAb row">
+        <div class="tabDouble1 row j-c a-c" :class="idx==index?'hover2':''" @click="son(item,idx)" v-for="(item,idx) in menu" :key="idx">{{item}}</div>
       </div>
       <div class="peopleMsg">
         <div class="item  row j-b a-c">
@@ -37,12 +40,14 @@
       </div>
       <div class="bar"></div>
 
-      <div class="btmCon row j-c a-c" @click="toPerson">
-        <div class="btm row j-c a-c">创建</div>
+      <div class="btmCon col j-c a-c">
+        <div class="btm row j-c a-c" @click="toPerson" :style="{'background-color':color}">创建纪念堂</div>
+        <div class="btm row j-c a-c" @click="myRecall" :style="{'background-color':color}">我的纪念堂</div>
       </div>
       <!-- <div class="btmCon row j-c a-c" v-if="mechan"  @click="toMechan">
         <div class="btm row j-c a-c">确认提交</div>
       </div> -->
+
     </div>
     <van-popup v-model="datetime" position="bottom" :columns-placeholder="['请选择', '请选择', '请选择']" :style="{ height: '40%' }">
       <van-datetime-picker v-if="datetime" v-model="currentDate" type="date" :min-date="minDate" :max-date="maxDate" @confirm="confirm" @cancel="cancel" />
@@ -55,6 +60,7 @@ import { Toast } from 'vant';
 export default {
   data() {
     return {
+      color: localStorage.getItem("color"),
       datetime: false,
       minDate: new Date(1790, 0, 1),
       maxDate: new Date(2025, 10, 1),
@@ -128,6 +134,11 @@ export default {
         path: './mechan'
       })
     },
+    myRecall() {
+      this.$router.push({
+        path: './myRecall'
+      })
+    },
     toPerson() {
       if (this.cardtype == 1) {
         this._addOne()
@@ -153,7 +164,7 @@ export default {
           firstName: this.firstName,
           firstDeathdate: this.firstDeathdate,
           firstBirthday: this.firstBirthday,
-          sid:this.$route.query.sid
+          sid: this.$route.query.sid
 
         }).then(res => {
           console.log('创建', res)
@@ -195,7 +206,7 @@ export default {
       } else if (this.secondDeathdate == '') {
         Toast("请输入离世时间")
         return false
-      } else{
+      } else {
         add({
           cardtype: this.cardtype,
           firstName: this.firstName,
@@ -204,7 +215,7 @@ export default {
           secondName: this.secondName,
           secondBirthday: this.secondBirthday,
           secondDeathdate: this.secondDeathdate,
-          sid:this.$route.query.sid
+          sid: this.$route.query.sid
         }).then(res => {
           console.log('创建', res)
           if (res.code == 0) {
@@ -246,19 +257,40 @@ export default {
   height: 61px;
   overflow: hidden;
   border-radius: 10px;
-  border: 1px solid #5aa967;
+  border: 2px solid #52aa5e;
   background-color: #ffffff;
   margin-top: 36px;
-  color: #5aa967;
+  color: #52aa5e;
 }
 
 .tabDouble {
   font-size: 30px;
   width: 50%;
-  height: 61px;
+  height: 100%;
+  opacity: 0;
 }
 .hover {
-  background-color: #5aa967;
+  background-color: #52aa5e;
+  color: #ffffff;
+  height: 100%;
+  opacity: 1;
+}
+.topAb {
+  width: 400px;
+  height: 61px;
+  overflow: hidden;
+  border-radius: 10px;
+  top: 36px;
+  position: absolute;
+  z-index: 3;
+}
+.topAb > .tabDouble1 {
+  font-size: 30px;
+  width: 50%;
+  height: 61px;
+  color: #333;
+}
+.topAb > .hover2 {
   color: #ffffff;
 }
 .peopleMsg {
@@ -353,6 +385,7 @@ form {
   color: #ffffff;
   font-size: 35px;
   border-radius: 10px;
+  margin-top: 10px;
 }
 .bar {
   height: 280px;

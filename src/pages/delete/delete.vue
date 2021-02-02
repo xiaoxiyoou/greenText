@@ -2,8 +2,8 @@
   <div class="container">
     <img class="" src="./delete.png" alt="">
     <div class="btmCon row ">
-      <div class="mine row a-c j-c" @click="myRecall">我的追思纪念堂</div>
-      <div class="created row a-c j-c" @click="create">创建追思纪念堂</div>
+      <div class="mine row a-c j-c" @click="myRecall" :style="{'color':color}">我的追思纪念堂</div>
+      <div class="created row a-c j-c" @click="create" :style="{'background-color':color}">创建追思纪念堂</div>
     </div>
   </div>
 
@@ -12,7 +12,7 @@
 export default {
   data() {
     return {
-
+       color:localStorage.getItem("color"), 
 
     }
   },

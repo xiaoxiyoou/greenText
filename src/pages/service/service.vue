@@ -1,7 +1,7 @@
 <template>
-  <div class="container col j-b">
+  <div class="container col j-b" v-wechat-title="orginfo.orgname" :style="{'background-color':color}">
     <div class="bannerWrapper">
-      <van-swipe class="banner" :autoplay="3000" indicator-color="#5aa967">
+      <van-swipe class="banner" :autoplay="3000" indicator-color=color>
         <van-swipe-item v-for="(image, index) in banner" :key="index">
           <img :src="image" v-if="image" />
         </van-swipe-item>
@@ -11,7 +11,7 @@
         <div>{{userinfo.nickname}}</div>
       </div>
       <div class="shadow"></div>
-      <div class="center  row a-c j-c" @click="personalCenter">点击进入个人中心</div>
+      <div class="center  row a-c j-c" @click="personalCenter" :style="{'background-color':color}">点击进入个人中心</div>
     </div>
     <div class="item-wrapper row f-w j-c a-c">
       <!-- 线上 -->
@@ -19,27 +19,12 @@
         <img :src="item.icon" alt="">
         <div>{{item.name}}</div>
       </div>
-      <!-- 本地 -->
-      <!-- <div class="item col j-c a-c border-right " @click="info1()">
-        <img src="./icon.png" alt="">
-        <div>安葬策划</div>
-      </div>
-      <div class="item col j-c a-c  " @click="person()">
-        <img src="./person.png" alt="">
-        <div>殡仪策划</div>
-      </div>
-      <div class="item col j-c a-c border-right" @click="mechan()">
-        <img src="./shop.png" alt="">
-        <div>临终关怀</div>
-      </div>
-      <div class="item col j-c a-c " @click="comment()">
-        <img src="./comment.png" alt="">
-        <div>线上追思</div>
-      </div> -->
+
     </div>
     <div class="bar"></div>
-    <div class="btm  col j-c a-c">
-      <img src="./btm.png" alt="">
+    <div class="btm  col j-c a-c" :style="{'background-color':bgcolor}">
+      <img :src="orginfo.logo" v-if="orginfo.logo" alt="">
+      <img src="./btm.png" v-else alt="">
     </div>
 
   </div>
@@ -52,19 +37,22 @@ export default {
       info: [],
       list: [],
       banner: [],
-      userinfo: ''
+      userinfo: '',
+      orginfo: '',
+      color: localStorage.getItem("color"),
+      bgcolor: localStorage.getItem("bgcolor")
+
 
 
     }
   },
   mounted() {
-    let link = window.location.href.match(/(\S*)wisdom/)[1]+"wisdom/index.html#" +  localStorage.getItem('fromUrl')
-    console.log('link',link)
     document.body.scrollTop = document.documentElement.scrollTop = 0
-    console.log('sid', this.$route.query.sid)
+    this.$nextTick(() => {
+      this._serviceInfo()
+    });
     this._selfDetail()
     sessionStorage.setItem('sid', this.$route.query.sid)
-    this._serviceInfo()
 
   },
   methods: {
@@ -72,9 +60,10 @@ export default {
       serviceInfo().then(res => {
         console.log('功能', res)
         this.info = res.data.info
+        this.orginfo = res.data.orginfo
+
         this.list = res.data.list
         this.banner = this.info.banner
-        console.log('banner', this.banner)
 
       })
     },
@@ -109,7 +98,6 @@ export default {
       console.log(link)
       let linkRouter = this.getCaption(link)
       this.$router.push({ path: linkRouter })
-      // window.location.href = link
 
     },
     // 获取字符串#后面的值
@@ -122,9 +110,7 @@ export default {
       this.$router.push({ path: '/funeralPlanning' })
     },
     mechan() {
-
       this.$router.push({ path: '/deathbed' })
-      // window.location.href = "http://b.fuyulove.com/ShopActity/deathbed/indexShow.html?shopId=10"
     },
     comment() {
       this.$router.push({
@@ -195,7 +181,6 @@ export default {
       color #ffffff
       font-size 30px
   .item-wrapper
-    background-color #52aa5e
     color #ffffff
     font-size 30px
     height 500px

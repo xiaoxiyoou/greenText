@@ -1,53 +1,77 @@
 <template>
-  <div class="container col j-b">
+  <div class="container col j-b" v-wechat-title="orginfo.orgname" :style="{'background-color':color}">
     <div class="bannerWrapper">
-      <img class="banner" src="./banner.png" alt="" />
+      <van-swipe class="banner" :autoplay="3000" indicator-color=color>
+        <van-swipe-item v-for="(image, index) in banner" :key="index">
+          <img :src="image" v-if="image" />
+        </van-swipe-item>
+      </van-swipe>
       <div class="avertwraper row a-c " @click="personalCenter">
         <img :src="userinfo.headimgurl" alt="">
         <div>{{userinfo.nickname}}</div>
       </div>
       <div class="shadow"></div>
-      <div class="center  row a-c j-c" @click="personalCenter">点击进入个人中心</div>
+      <div class="center  row a-c j-c" @click="personalCenter" :style="{'background-color':color}">点击进入个人中心</div>
     </div>
     <div class="item-wrapper row f-w j-c a-c">
-      <div class="item col j-c a-c border-right" @click="box()">
-        <img src="./icon.png" alt="" />
-        <div>知名品牌</div>
+      <div class="item col j-c a-c " @click="menu(index,item.link)" v-for="(item,index) in list" :key="index">
+        <img :src="item.icon" alt="">
+        <div>{{item.name}}</div>
       </div>
-      <div class="item col j-c a-c  " @click="funeral()">
-        <img src="./person.png" alt="" />
-        <div>殡仪用品</div>
-      </div>
-      <div class="item col j-c a-c border-right" @click="burial()">
-        <img src="./shop.png" alt="" />
-        <div>安葬用品</div>
-      </div>
-      <div class="item col j-c a-c " @click="piety()">
-        <img src="./comment.png" alt="" />
-        <div>孝道用品</div>
-      </div>
+
     </div>
     <div class="bar"></div>
-    <div class="btm  col j-c a-c">
-      <img src="./btm.png" alt="" />
+    <div class="btm  col j-c a-c" :style="{'background-color':bgcolor}">
+      <img :src="orginfo.logo" v-if="orginfo.logo" alt="">
+      <img src="./btm.png" v-else alt="">
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { getuserinfo, selfDetail } from 'api/index'
+import { getuserinfo, selfDetail, productInfo } from 'api/index'
 export default {
   data() {
     return {
-      userinfo: ''
-
+      userinfo: '',
+      banner: '',
+      list: [],
+      info: [],
+      orginfo: '',
+      color: localStorage.getItem("color"),
+      bgcolor: localStorage.getItem("bgcolor")
 
     }
   },
   mounted() {
     this._selfDetail()
-
+    this.$nextTick(() => {
+      this._productInfo()
+    });
   },
   methods: {
+    menu(index, link) {
+      console.log(link)
+      let linkRouter = this.getCaption(link)
+      this.$router.push({ path: linkRouter })
+
+    },
+    // 获取字符串#后面的值
+    getCaption(obj) {
+      var index = obj.lastIndexOf("#");
+      obj = obj.substring(index + 1, obj.length);
+      return obj;
+    },
+    _productInfo() {
+      productInfo().then(res => {
+        console.log('功能', res)
+        this.info = res.data.info
+        this.list = res.data.list
+        this.banner = this.info.banner
+        this.orginfo = res.data.orginfo
+        localStorage.setItem("color", res.data.info.color)
+
+      })
+    },
     _selfDetail() {
       selfDetail().then(res => {
         console.log('信息', res)
@@ -110,6 +134,9 @@ export default {
       width 100%
       height 590px
       vertical-align bottom
+      img
+        width 100%
+        height 590px
     .avertwraper
       position absolute
       color #ffffff
@@ -140,7 +167,6 @@ export default {
       color #ffffff
       font-size 30px
   .item-wrapper
-    background-color #52aa5e
     color #ffffff
     font-size 30px
     height 500px
@@ -154,6 +180,8 @@ export default {
       img
         width 53px
         margin-bottom 15px
+    .item:nth-of-type(odd)
+      border-right 2px solid rgba(255, 255, 255, 0.2)
   .bar
     width 100%
     height 96px

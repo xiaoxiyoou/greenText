@@ -39,7 +39,7 @@
     <div class="bar"></div>
     <div class="template   row j-b a-c">
       <div class="text coleorOne">线上留言</div>
-      <van-switch v-model="checked" size="18px" active-color="#5aa967" inactive-color="#eaeaea" @change="onChange()" />
+      <van-switch v-model="checked" size="18px" :active-color=color inactive-color="#eaeaea" @change="onChange()" />
     </div>
     <!-- <div class="bar"></div> -->
 
@@ -53,9 +53,9 @@
       <div class="mask" @click="deleteWrapperShow(false)"></div>
       <div class="item">
         <div class="deleteCon col a-c">
-          <div class="tip">确认删除此追思纪念堂？</div>
-          <div class="confirm col a-c j-c" @click="_delcard">确认删除</div>
-          <img class="close" src="./closeTwo.png" alt="" @click="deleteWrapperShow(false)">
+          <div class="tip" :style="{'color':color}">确认删除此追思纪念堂？</div>
+          <div class="confirm col a-c j-c" @click="_delcard" :style="{'background-color':color}">确认删除</div>
+          <img class="close" src="./closeTwo.png" alt="" @click="deleteWrapperShow(false)" >
         </div>
       </div>
     </div>
@@ -71,7 +71,8 @@ export default {
       checked: true,
       deleteWrapper: false,
       ismsg: 0,
-      info:""
+      info:"",
+      color:localStorage.getItem("color") 
 
 
 

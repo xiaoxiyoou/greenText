@@ -10,15 +10,8 @@ function getCaption(obj) {
   obj = obj.substring(index + 1, obj.length);
   return obj;
 }
-// var sid = 659
-var sid
 let fromUrl = localStorage.getItem('fromUrl')
-if (fromUrl.search("sid") != -1) {
-  sid = getCaption(fromUrl, 1)
-} else {
-  sid = 659
-}
-console.log('ajaxsid', sid)
+
 export default function ajax(url = '', params = {}, type = 'GET') {
   let promise;
   // 1. 返回promise对象
@@ -42,7 +35,6 @@ export default function ajax(url = '', params = {}, type = 'GET') {
           'uid': uid,
           'usrkey': openid,
           'token': token,
-          'sid': sid
         }
       })
       store.dispatch('setStatus', true)
@@ -54,7 +46,6 @@ export default function ajax(url = '', params = {}, type = 'GET') {
           'uid': uid,
           'usrkey': openid,
           'token': token,
-          'sid': sid
         }
       });
       store.dispatch('setStatus', true)

@@ -6,19 +6,21 @@
       </van-swipe-item>
     </van-swipe>
     <div class="itemWrapper row a-c j-b">
-      <div class="itemContent  row a-c j-b">
-        <div class="item " :class="index==defalutindex?'hoverItem':''" @click="son(item.id,index)" v-for="(item,index) in catlist" :key="index">{{item.name}}</div>
+      <div class="itemContent  row a-c ">
+        <div class="item " :class="index==defalutindex?'hoverItem':''" @click="son(item.id,index)" v-for="(item,index) in catlist.slice(0, 4)" :key="index">{{item.name}}</div>
       </div>
       <img src="./search.png" alt="" @click="searchBar">
     </div>
     <van-list v-model="loading" :finished="finished" :finished-text="finishedtext" @load="onLoad">
       <div class="info">
-        <div class="item van-hairline--bottom" @click="InfoDetail(item.id)" v-for="(item,index) in list" :key="index">
-          <div class="tltle">{{item.title}}</div>
-          <div class="imgWrapper row f-w" v-if="item.img">
-            <img class="comImg" :src="itemImg" alt="" v-for="(itemImg,indexImg) in item.img.slice(0, 3)" :key="indexImg">
+        <div class="item row j-b a-c" @click="InfoDetail(item.id)" v-for="(item,index) in list" :key="index">
+          <div class="textWrap col j-b">
+            <div class="tltle">{{item.title}}</div>
+            <div class="date">{{item.updatetime | moment}}</div>
           </div>
-          <div class="date">{{item.updatetime}}</div>
+          <div class="imgWrapper row f-w" v-if="item.img.length">
+            <img class="comImg" :src="itemImg" alt="" v-for="(itemImg,indexImg) in item.img.slice(0, 1)" :key="indexImg">
+          </div>
         </div>
         <noMessage :noinfoShow="noinfoShow" />
       </div>
@@ -82,7 +84,7 @@ export default {
 
       })
     },
-    _articaList(catid) {
+    _articaList(catid) { 
       articaList({
         catid: catid,
         page: this.page,
@@ -158,10 +160,11 @@ export default {
       border-right 1px solid #f5f5f5
       padding-right 10px
       .hoverItem
-        color #1ead55
         font-size 32px
-        border-bottom 3px solid #1ead55
         padding-bottom 2px
+        font-weight 700
+      .item
+        margin-right 35px
       img
         width 22px
         height 11px
@@ -173,21 +176,33 @@ export default {
   .info
     background-color #ffffff
     .item
-      margin 33px 27px 0px 31px
-      padding-bottom 26px
-      .date
-        color #919191
-        font-size 25px
-        margin-top 5px
-      .tltle
-        color #252525
-        font-size 33px
-        margin-top 15px
-        padding-bottom 15px
+      margin 25px 20px 
+      padding-bottom 25px
+      border-bottom 1px solid #eaeaea
+      .textWrap
+       height 150px
+       .date
+          color #919191
+          font-size 28px
+          margin-top 5px
+       .tltle
+          color #252525
+          font-size 32px
+          overflow hidden
+          display -webkit-box
+          -webkit-box-orient vertical
+          -webkit-line-clamp 2
+          text-overflow ellipsis
       .imgWrapper
+        width 200px
+        height 150px
+        overflow hidden
+        display block
+        margin-left 20px
+        flex-shrink 0
         .comImg
-          margin-bottom 15px
-          width 226px
-          height 150px
-          margin-right 4px
+          width 100%
+          min-height 150px
+          -o-object-fit cover
+  
 </style>

@@ -37,7 +37,7 @@
         <div class="value"><span class="price">￥</span>{{item.price}}</div>
       </div>
     </div>
-    <img class="introTitle" src="./title2.png" alt="" style="margin-top:0" v-if="newList2.length">
+    <!-- <img class="introTitle" src="./title2.png" alt="" style="margin-top:0" v-if="newList2.length">
     <div class="proWrapper row f-w j-b">
       <div class="item" v-for="(item,index) in newList2" :key="index" @click="Detail(item.id,item.cat_id)">
         <img class="proImg" v-if="item.imgurl" :src="item.imgurl" alt="">
@@ -58,7 +58,7 @@
         <div class="des" v-else>{{item.title}}</div>
         <div class="value"><span class="price">￥</span>{{item.price}}</div>
       </div>
-    </div>
+    </div> -->
     <div class="bar"></div>
   </div>
 
@@ -70,8 +70,8 @@ export default {
     return {
       images: [
         require('./../../assets/img/indexBanner.png'),
-        require('./../../assets/img/banner1.png'),
-        require('./../../assets/img/banner2.png')
+        // require('./../../assets/img/banner1.png'),
+        // require('./../../assets/img/banner2.png')
       ],
       newList: [
 
@@ -86,8 +86,8 @@ export default {
   mounted() {
     document.body.scrollTop = document.documentElement.scrollTop = 0
     this._goodsList(1, 100, 1)
-    this._goodsList2(1, 100, 7)
-    this._goodsList3(1, 100, 8)
+    // this._goodsList2(1, 100, 7)
+    // this._goodsList3(1, 100, 8)
 
   },
   methods: {
@@ -264,5 +264,5 @@ export default {
   .bar
     height 40px
     width 100%
-    background-color #f5f5f5
+    background-color #ffffff
 </style>

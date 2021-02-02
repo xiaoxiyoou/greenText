@@ -19,7 +19,7 @@
         <div class="title">搜索历史</div>
         <img class="delect" src="./delect.png" alt="" @click="_delsearch()">
       </div>
-      <div class="item-wrap row f-w "  v-if="history.length">
+      <div class="item-wrap row f-w " v-if="history.length">
         <div class="hot-item col j-c a-c" v-for="(item,index) in history.slice(0, 8)" :key="index" @click="historyCon(item.keyword)">{{item.keyword}}</div>
       </div>
       <div class="item-wrap row f-w " v-else>
@@ -28,10 +28,10 @@
     </div>
     <div class="conwrapper " v-if="!searchRecord">
       <noMessage :noinfoShow="noinfoShow" />
-      <div class="itemWrapper  row van-hairline--bottom" v-for="(item,index) in searchList" :key="index"  @click="show(item.id)">
+      <div class="itemWrapper  row van-hairline--bottom" v-for="(item,index) in searchList" :key="index" @click="show(item.id)">
         <div class="previewCon  row a-c">
-          <div class="preview">预览</div>
-          <div class="previewTip"></div>
+          <div class="preview" :style="{'color':color}">预览</div>
+          <div class="previewTip" :style="{'border-color':color}"></div>
         </div>
         <div class="titleImgCon">
           <img class="titleImg" :src="item.imgurl" alt="" v-if="item.imgurl">
@@ -41,7 +41,7 @@
           <div class="row">
             <div class="item  col j-b">
               <div class="name">{{item.name}}</div>
-              <div class="age">创建日期{{item.createdate}}</div>
+              <div class="age">创建日期:{{item.createdate|  moment}}</div>
             </div>
           </div>
 
@@ -64,7 +64,8 @@ export default {
       value: '',
       searchList: [],
       history: [],
-      remitem: []
+      remitem: [],
+      color: localStorage.getItem("color")
     }
   },
   mounted() {

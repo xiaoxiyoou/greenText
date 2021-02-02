@@ -1,8 +1,11 @@
 <template>
   <div class="container">
     <div class="con col a-c">
-      <div class="top row">
-        <div class="tabDouble row j-c a-c" :class="idx==index?'hover':''" @click="son(item,idx)" v-for="(item,idx) in menu" :key="idx">{{item}}</div>
+       <div class="top row" :style="{'color':color,'border-color': color}">
+        <div class="tabDouble row j-c a-c" :class="idx==index?'hover':''" @click="son(item,idx)" v-for="(item,idx) in menu" :key="idx" :style="{'background-color':color}">{{item}}</div>
+      </div>
+       <div class="topAb row">
+        <div class="tabDouble1 row j-c a-c" :class="idx==index?'hover2':''" @click="son(item,idx)" v-for="(item,idx) in menu" :key="idx">{{item}}</div>
       </div>
       <div class="peopleMsg">
         <div class="item row j-b a-c">
@@ -70,7 +73,8 @@
       <div class="btmMsg">
         <div class="item row j-b a-c">
           <div class="text">逝者生平</div>
-          <div class="btn row a-c j-c" @click="lifeSelect">选择生平模板</div>
+          <div class="btn row a-c j-c" @click="lifeSelect" 
+:style="{'background-color':color}">选择生平模板</div>
         </div>
         <textarea name="life" v-model="life" @blur="getHeight"></textarea>
         <div class="item row j-b a-c">
@@ -91,7 +95,8 @@
         <div class="layui-upload-list alltu" id="lblimglist"></div>
       </div>
       <div class="btmCon row j-c a-c" @click="myRecall">
-        <div class="btm row j-c a-c" v-if="showBtn">提交</div>
+        <div class="btm row j-c a-c" v-if="showBtn" 
+:style="{'background-color':color}">提交</div>
       </div>
       <div class="bar"></div>
     </div>
@@ -121,7 +126,8 @@
             <div class="itemText">
               {{item.desn}}
             </div>
-            <div class="selectedTpl" @click="tempSelect(index)">选用此模板</div>
+            <div class="selectedTpl" @click="tempSelect(index)" 
+:style="{'background-color':color}">选用此模板</div>
           </div>
         </div>
       </div>
@@ -139,6 +145,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      color: localStorage.getItem("color"),
       lifeshow: false,
       imglist: '',
       life: '',
@@ -586,19 +593,40 @@ export default {
   height: 61px;
   overflow: hidden;
   border-radius: 10px;
-  border: 1px solid #5aa967;
+  border: 2px solid #52aa5e;
   background-color: #ffffff;
   margin-top: 36px;
-  color: #5aa967;
+  color: #52aa5e;
 }
 
 .tabDouble {
   font-size: 30px;
   width: 50%;
-  height: 61px;
+  height: 100%;
+  opacity: 0;
 }
 .hover {
-  background-color: #5aa967;
+  background-color: #52aa5e;
+  color: #ffffff;
+  height: 100%;
+  opacity: 1;
+}
+.topAb {
+  width: 400px;
+  height: 61px;
+  overflow: hidden;
+  border-radius: 10px;
+  top: 36px;
+  position: absolute;
+  z-index: 3;
+}
+.topAb > .tabDouble1 {
+  font-size: 30px;
+  width: 50%;
+  height: 61px;
+  color: #333;
+}
+.topAb > .hover2 {
   color: #ffffff;
 }
 .peopleMsg {

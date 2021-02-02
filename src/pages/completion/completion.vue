@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="top col j-c a-c">
-      <img class="check" src="./check.png" alt="">
+      <img class="check" src="./check.png" alt="" :style="{'background-color':color}">
       <div class="text">追思纪念堂创建成功</div>
     </div>
     <div class="content">
@@ -34,6 +34,7 @@
 export default {
   data() {
     return {
+       color:localStorage.getItem("color"),
 
 
 
@@ -85,6 +86,7 @@ export default {
       width 105px
       height 105px
       margin-bottom 15px
+      background-color #52aa5e
   .content
     padding 28px 45px
     color #484848

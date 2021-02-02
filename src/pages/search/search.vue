@@ -3,19 +3,19 @@
     <form action="/">
       <van-search v-model="value" show-action placeholder="请输入你要搜索的内容" @search="onSearch" @cancel="onCancel" />
     </form>
-    <div class="info">
-      <van-list v-model="loading" :finished="finished" :finished-text="finishedtext" @load="onLoad">
-        <div class="item van-hairline--bottom" @click="InfoDetail(item.id)" v-for="(item,index) in list" :key="index">
-          <div class="tltle">{{item.title}}</div>
-          <div class="imgWrapper row f-w" v-if="item.img">
-            <img class="comImg" :src="itemImg" alt="" v-for="(itemImg,indexImg) in item.img.slice(0, 3)" :key="indexImg">
+     <div class="info">
+        <div class="item row j-b a-c" @click="InfoDetail(item.id)" v-for="(item,index) in list" :key="index">
+          <div class="textWrap col j-b">
+            <div class="tltle">{{item.title}}</div>
+            <div class="date">{{item.updatetime | moment}}</div>
           </div>
-          <div class="date">{{item.updatetime}}</div>
+          <div class="imgWrapper row f-w" v-if="item.img.length">
+            <img class="comImg" :src="itemImg" alt="" v-for="(itemImg,indexImg) in item.img.slice(0, 1)" :key="indexImg">
+          </div>
         </div>
         <noMessage :noinfoShow="noinfoShow" />
-      </van-list>
-    </div>
-    <div class="btm row j-c a-c" @click="jion">申请加入公示人员/机构</div>
+      </div>
+    <div class="btm row j-c a-c" @click="jion" :style="{'background-color':color}">申请加入公示人员/机构</div>
   </div>
 
 </template>
@@ -37,7 +37,7 @@ export default {
       size: 10,
       key: '',
       count: '',
-
+      color: localStorage.getItem("color")
 
 
     }
@@ -139,25 +139,35 @@ export default {
   bottom 0
   .info
     background-color #ffffff
-    margin-bottom 100px
     .item
-      margin 33px 27px 0px 31px
-      padding-bottom 26px
-      .date
-        color #919191
-        font-size 25px
-        margin-top 5px
-      .tltle
-        color #252525
-        font-size 35px
-        margin-top 15px
-        padding-bottom 15px
+      margin 25px 20px 
+      padding-bottom 25px
+      border-bottom 1px solid #eaeaea
+      .textWrap
+       height 150px
+       .date
+          color #919191
+          font-size 28px
+          margin-top 5px
+       .tltle
+          color #252525
+          font-size 32px
+          overflow hidden
+          display -webkit-box
+          -webkit-box-orient vertical
+          -webkit-line-clamp 2
+          text-overflow ellipsis
       .imgWrapper
+        width 200px
+        height 150px
+        overflow hidden
+        display block
+        margin-left 20px
+        flex-shrink 0
         .comImg
-          margin-bottom 15px
-          width 226px
-          height 150px
-          margin-right 4px
+          width 100%
+          min-height 150px
+          -o-object-fit cover
   .btm
     position fixed
     bottom 15px

@@ -16,16 +16,11 @@
               <div class="name">{{item.nickname}}</div>
               <div class="startWrapper row  a-c">
                 <div class="text">打分</div>
-                <div v-if="item.score!=0">
-                  <img src="./../../assets/img/xing.png" alt="" v-for="(itemscore,indexxing) in parseInt(item.score)" :key="indexxing">
-                </div>
-                <div v-if=" 5 - item.score!=0">
-                  <img src="./../../assets/img/hui.png" alt="" v-for="(itemscore,indexscore) in 5 - item.score" :key="indexscore">
-                </div>
-                <div class="grade">{{item.score}}分</div>
+                 <van-rate v-model="item.score" allow-half void-icon="star" void-color="#eee" :color="color" size="15" readonly/>
+                <div class="grade" :style="{'color':color}">{{item.score}}分</div>
               </div>
             </div>
-            <div class="date">{{item.createdate}}</div>
+            <div class="date">{{item.createdate | moment}}</div>
             <div class="des">{{item.intro}}</div>
             <div class="imgWrapper row f-w" v-if="item.imglist.length && item.imglist[0]!= ''">
               <img class="comImg" :src="itemImg" alt="" v-for="(itemImg,index) in item.imglist.slice(0, 3)" :key="index" @click="imgPrew(item.imglist.slice(0, 3),index)">
@@ -35,7 +30,7 @@
         </div>
       </van-list>
     </div>
-    <div class="btm row j-c a-c" @click="toComment">写评价</div>
+    <div class="btm row j-c a-c" @click="toComment" :style="{'background-color':color}">写评价</div>
     <div class="bar"></div>
   </div>
 
@@ -57,7 +52,8 @@ export default {
       finished: false,
       page: 1,
       size: 10,
-      finishedtext: '没有更多数据了'
+      finishedtext: '没有更多数据了',
+      color: localStorage.getItem("color"),
 
 
 
@@ -76,7 +72,7 @@ export default {
         images: flag,
         closeable: true,
         startPosition: index,
-        closeOnPopstate:true
+        closeOnPopstate: true
       });
     },
     // 分页
